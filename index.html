@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>S.A.I. | Solutions with AI</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #020617;
+            color: #f8fafc;
+            scroll-behavior: smooth;
+        }
+
+        .glass {
+            background: rgba(30, 41, 59, 0.5);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #38bdf8, #818cf8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-glow {
+            position: absolute;
+            top: -10%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            height: 400px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, rgba(2, 6, 23, 0) 70%);
+            z-index: -1;
+        }
+
+        #calendar-section {
+            display: none;
+        }
+
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #38bdf8;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Styling for the Google Calendar Container */
+        .calendar-wrapper {
+            background: white;
+            border-radius: 1rem;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(56, 189, 248, 0.25);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Nav -->
+    <nav class="fixed w-full z-50 glass py-4">
+        <div class="max-w-6xl mx-auto px-6 flex justify-between items-center">
+            <div class="text-2xl font-bold tracking-tighter text-white">S.A.I.</div>
+            <a href="#contact" class="bg-sky-500 hover:bg-sky-600 px-5 py-2 rounded-full text-sm font-semibold transition">Get Started</a>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="relative pt-32 pb-20 px-6 overflow-hidden text-center">
+        <div class="hero-glow"></div>
+        <div class="max-w-4xl mx-auto">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-white">
+                Never Miss <br><span class="gradient-text">Another Lead</span>
+            </h1>
+            <p class="text-xl text-slate-400 mb-10 max-w-2xl mx-auto">
+                AI receptionists that answer calls, qualify prospects, and book appointments 24/7.
+            </p>
+            <a href="#contact" class="bg-sky-500 hover:bg-sky-400 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all transform hover:scale-105 shadow-lg shadow-sky-500/20">
+                Book a Discovery Call
+            </a>
+        </div>
+    </section>
+
+    <!-- Benefits -->
+    <section class="py-20 px-6">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="glass p-8 rounded-2xl">
+                <i class="fa-solid fa-phone-volume text-sky-400 text-3xl mb-4"></i>
+                <h3 class="text-xl font-semibold mb-2">Answer Every Call</h3>
+                <p class="text-slate-400 text-sm">No more voicemails. Your AI handles every inbound ring instantly.</p>
+            </div>
+            <div class="glass p-8 rounded-2xl">
+                <i class="fa-solid fa-filter text-sky-400 text-3xl mb-4"></i>
+                <h3 class="text-xl font-semibold mb-2">Qualify Leads</h3>
+                <p class="text-slate-400 text-sm">The AI asks the right questions to ensure they are a perfect fit for you.</p>
+            </div>
+            <div class="glass p-8 rounded-2xl">
+                <i class="fa-solid fa-calendar-check text-sky-400 text-3xl mb-4"></i>
+                <h3 class="text-xl font-semibold mb-2">Instant Booking</h3>
+                <p class="text-slate-400 text-sm">Direct integration with your calendar for seamless scheduling.</p>
+            </div>
+            <div class="glass p-8 rounded-2xl">
+                <i class="fa-solid fa-clock text-sky-400 text-3xl mb-4"></i>
+                <h3 class="text-xl font-semibold mb-2">Available 24/7</h3>
+                <p class="text-slate-400 text-sm">While you sleep, your AI is working, qualifying, and booking.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-20 px-6 bg-slate-900/50">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-16">How It Works</h2>
+            <div class="space-y-12">
+                <div class="flex gap-6 items-start">
+                    <div class="bg-sky-500 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold flex-shrink-0">1</div>
+                    <div>
+                        <h4 class="text-xl font-semibold mb-2">Calls are answered by AI</h4>
+                        <p class="text-slate-400">When a prospect calls, S.A.I answers in your brand voice within seconds.</p>
+                    </div>
+                </div>
+                <div class="flex gap-6 items-start">
+                    <div class="bg-sky-500 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold flex-shrink-0">2</div>
+                    <div>
+                        <h4 class="text-xl font-semibold mb-2">AI qualifies leads</h4>
+                        <p class="text-slate-400">The AI determines budget, urgency, and project scope automatically.</p>
+                    </div>
+                </div>
+                <div class="flex gap-6 items-start">
+                    <div class="bg-sky-500 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold flex-shrink-0">3</div>
+                    <div>
+                        <h4 class="text-xl font-semibold mb-2">Booked into your calendar</h4>
+                        <p class="text-slate-400">Qualified leads are instantly added to your CRM or Calendar.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Industries -->
+    <section class="py-20 px-6">
+        <div class="max-w-6xl mx-auto text-center">
+            <h2 class="text-3xl font-bold mb-12 text-white">Tailored for Your Industry</h2>
+            <div class="flex flex-wrap justify-center gap-4">
+                <span class="glass px-6 py-3 rounded-full border-sky-500/30 text-sky-300 font-medium">Contractors</span>
+                <span class="glass px-6 py-3 rounded-full border-sky-500/30 text-sky-300 font-medium">Medical Practices</span>
+                <span class="glass px-6 py-3 rounded-full border-sky-500/30 text-sky-300 font-medium">Law Firms</span>
+                <span class="glass px-6 py-3 rounded-full border-sky-500/30 text-sky-300 font-medium">Home Services</span>
+                <span class="glass px-6 py-3 rounded-full border-sky-500/30 text-sky-300 font-medium">Real Estate</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Form Section -->
+    <section id="contact" class="py-20 px-6 bg-slate-900/30">
+        <div class="max-w-4xl mx-auto">
+            <!-- Initial Form Container -->
+            <div id="form-container" class="glass p-8 md:p-10 rounded-3xl max-w-xl mx-auto">
+                <h2 class="text-3xl font-bold mb-2">Let's Scale Your Business</h2>
+                <p class="text-slate-400 mb-8">Enter your details to access our calendar.</p>
+                
+                <form id="contact-form" class="space-y-4">
+                    <div>
+                        <label class="block text-sm mb-2 text-slate-300">Name</label>
+                        <input type="text" id="name" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:border-sky-500 transition text-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm mb-2 text-slate-300">Business Name</label>
+                        <input type="text" id="business" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:border-sky-500 transition text-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm mb-2 text-slate-300">Email</label>
+                        <input type="email" id="email" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:border-sky-500 transition text-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm mb-2 text-slate-300">Briefly describe your business</label>
+                        <textarea id="description" rows="3" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:border-sky-500 transition text-white"></textarea>
+                    </div>
+                    <button type="submit" id="submit-btn" class="w-full bg-sky-500 hover:bg-sky-400 text-white font-bold py-4 rounded-xl transition shadow-lg flex items-center justify-center">
+                        <span id="btn-text">Continue to Calendar</span>
+                        <i class="fa-solid fa-arrow-right ml-2"></i>
+                    </button>
+                </form>
+            </div>
+
+            <!-- Google Calendar Section (Initially Hidden) -->
+            <div id="calendar-section" class="text-center animate-fade-in">
+                <h2 class="text-3xl font-bold mb-6 text-white">Select a Time</h2>
+                <div class="calendar-wrapper">
+                    <!-- Google Calendar Embed -->
+                    <iframe src="https://calendar.app.google/epkzE3JRMouRKTf66" width="100%" height="700" frameborder="0" scrolling="yes"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-slate-800 px-6 text-center">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-xl font-bold tracking-tighter text-white mb-2">S.A.I.</div>
+            <p class="text-slate-500 text-sm">S.A.I. - Solutions with AI</p>
+        </div>
+    </footer>
+
+    <script>
+        const contactForm = document.getElementById('contact-form');
+        const formContainer = document.getElementById('form-container');
+        const calendarSection = document.getElementById('calendar-section');
+        const submitBtn = document.getElementById('submit-btn');
+        const btnText = document.getElementById('btn-text');
+
+        // MAKE.COM WEBHOOK
+        const WEBHOOK_URL = 'https://hook.us2.make.com/p4y4gxnftk25hyec67xtxgjtkzlj3dhv';
+
+        contactForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // 1. Show loading status
+            submitBtn.disabled = true;
+            btnText.innerHTML = '<span class="loader"></span> Sending...';
+
+            // 2. Collect Data
+            const formData = {
+                name: document.getElementById('name').value,
+                business: document.getElementById('business').value,
+                email: document.getElementById('email').value,
+                description: document.getElementById('description').value,
+                timestamp: new Date().toLocaleString(),
+                source: "Website Landing Page"
+            };
+
+            try {
+                // 3. Send to Make.com Webhook
+                // We use mode 'no-cors' if your webhook doesn't return headers, 
+                // but standard POST usually works fine.
+                await fetch(WEBHOOK_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(formData)
+                });
+
+                // 4. Hide form and show Google Calendar
+                formContainer.style.display = 'none';
+                calendarSection.style.display = 'block';
+                
+                // Scroll to calendar
+                calendarSection.scrollIntoView({ behavior: 'smooth' });
+
+            } catch (error) {
+                console.error('Submission error:', error);
+                // Even if webhook fails, we show the calendar to the user so we don't lose the lead
+                formContainer.style.display = 'none';
+                calendarSection.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
