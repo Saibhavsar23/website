@@ -200,7 +200,11 @@
                         <input type="tel" id="phone" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:border-sky-500 transition text-white">
                     </div>
                     <div>
-                        <label class="block text-sm mb-2 text-slate-300">Describe Your Biggest Business Challenge</label>
+                        <label class="block text-sm mb-2 text-slate-300">Industry</label>
+                        <input type="text" id="industry" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:border-sky-500 transition text-white">
+                    </div>
+                    <div>
+                        <label class="block text-sm mb-2 text-slate-300">Briefly describe your business and what you want to do with AI</label>
                         <textarea id="description" rows="3" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:border-sky-500 transition text-white"></textarea>
                     </div>
                     <button type="submit" id="submit-btn" class="w-full bg-sky-500 hover:bg-sky-400 text-white font-bold py-4 rounded-xl transition shadow-lg flex items-center justify-center">
@@ -251,6 +255,7 @@
                 business: document.getElementById('business').value,
                 email: document.getElementById('email').value,
                 phone: document.getElementById('phone').value,
+                industry: document.getElementById('industry').value,
                 description: document.getElementById('description').value,
                 timestamp: new Date().toLocaleString(),
                 source: "Main Homepage"
