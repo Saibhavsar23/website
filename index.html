@@ -7,94 +7,226 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-        
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+        :root {
+            --canvas: #EEF0EA;
+            --canvas-alt: #E3E6DD;
+            --ink: #17212E;
+            --muted: #5B6474;
+            --blue: #1F4E8C;
+            --blue-deep: #12314F;
+            --brass: #B8822C;
+            --line: #D8D3C6;
+            --white: #FFFFFF;
+        }
+
+        * { box-sizing: border-box; }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #020617;
-            color: #f8fafc;
+            font-family: 'IBM Plex Sans', sans-serif;
+            background-color: var(--canvas);
+            color: var(--ink);
             scroll-behavior: smooth;
         }
 
-        .glass {
-            background: rgba(30, 41, 59, 0.5);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; }
+
+        .mono { font-family: 'IBM Plex Mono', monospace; }
+
+        .eyebrow {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--blue);
+            font-weight: 500;
         }
 
-        .gradient-text {
-            background: linear-gradient(90deg, #38bdf8, #818cf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .nav-glass {
+            background: rgba(238, 240, 234, 0.92);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--line);
         }
 
-        .hero-glow {
-            position: absolute;
-            top: -10%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            height: 400px;
-            background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, rgba(2, 6, 23, 0) 70%);
-            z-index: -1;
+        .blueprint-grid {
+            background-image:
+                linear-gradient(rgba(31,78,140,0.07) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(31,78,140,0.07) 1px, transparent 1px);
+            background-size: 34px 34px;
         }
+
+        .card {
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+        .card:hover { border-color: var(--blue); transform: translateY(-3px); }
+
+        .tag {
+            display: inline-block;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.3rem 0.6rem;
+            border: 1px solid var(--line);
+            border-radius: 5px;
+            color: var(--muted);
+            background: var(--canvas-alt);
+        }
+
+        .btn-primary {
+            background: var(--blue);
+            color: #fff;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background 0.2s ease;
+        }
+        .btn-primary:hover { background: var(--brass); }
+
+        .btn-secondary {
+            background: var(--white);
+            border: 1px solid var(--ink);
+            color: var(--ink);
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+        .btn-secondary:hover { background: var(--ink); color: var(--canvas); }
+
+        .btn-nav {
+            background: var(--blue);
+            color: #fff;
+            border-radius: 7px;
+            font-weight: 600;
+            transition: background 0.2s ease;
+        }
+        .btn-nav:hover { background: var(--brass); }
 
         #calendar-section { display: none; }
 
         .loader {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #38bdf8;
+            border: 3px solid rgba(255,255,255,0.35);
+            border-top: 3px solid #fff;
             border-radius: 50%;
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             animation: spin 1s linear infinite;
             display: inline-block;
             margin-right: 10px;
             vertical-align: middle;
         }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         .calendar-wrapper {
             background: white;
-            border-radius: 1rem;
+            border: 1px solid var(--line);
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(56, 189, 248, 0.25);
+            box-shadow: 0 20px 40px -20px rgba(23,33,46,0.25);
         }
+
+        .input-field {
+            width: 100%;
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: var(--ink);
+            transition: border-color 0.2s ease;
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(31,78,140,0.12);
+        }
+
+        .field-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .step-marker {
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 600;
+            color: #fff;
+            background: var(--blue);
+            width: 42px;
+            height: 42px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-line {
+            position: relative;
+        }
+        .step-line::before {
+            content: '';
+            position: absolute;
+            top: 21px;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--line);
+            z-index: 0;
+        }
+        @media (max-width: 767px) {
+            .step-line::before { display: none; }
+        }
+
+        .corner-marks { position: relative; }
+        .corner-marks::before, .corner-marks::after {
+            content: '';
+            position: absolute;
+            width: 14px;
+            height: 14px;
+        }
+        .corner-marks::before { top: -1px; left: -1px; border-top: 2px solid var(--brass); border-left: 2px solid var(--brass); }
+        .corner-marks::after { bottom: -1px; right: -1px; border-bottom: 2px solid var(--brass); border-right: 2px solid var(--brass); }
     </style>
 </head>
 <body>
 
     <!-- Nav -->
-    <nav class="fixed w-full z-50 glass py-4">
+    <nav class="fixed w-full z-50 nav-glass py-4">
         <div class="max-w-6xl mx-auto px-6 flex justify-between items-center">
-            <div class="text-2xl font-bold tracking-tighter text-white">S.A.I.</div>
-            <div class="hidden md:flex space-x-8">
-                <a href="index.html" class="text-sky-400 font-semibold">Home</a>
-                <a href="receptionists.html" class="text-slate-300 hover:text-white transition">24/7 AI Receptionists</a>
+            <div>
+                <div class="text-2xl font-bold tracking-tight" style="color: var(--ink);">S.A.I.</div>
             </div>
-            <a href="#contact" class="bg-sky-500 hover:bg-sky-600 px-5 py-2 rounded-full text-sm font-semibold transition">Book Consultation</a>
+            <div class="hidden md:flex space-x-8 mono" style="font-size: 0.9rem;">
+                <a href="index.html" style="color: var(--blue); font-weight: 600;">Home</a>
+                <a href="receptionists.html" style="color: var(--muted);" class="hover:text-[var(--ink)] transition">24/7 AI Receptionists</a>
+            </div>
+            <a href="#contact" class="btn-nav px-5 py-2 text-sm">Book Consultation</a>
         </div>
     </nav>
 
     <!-- Hero -->
-    <section class="relative pt-40 pb-24 px-6 overflow-hidden text-center">
-        <div class="hero-glow"></div>
-        <div class="max-w-4xl mx-auto">
-            <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-white leading-tight">
-                Implement AI That <br><span class="gradient-text">Actually Saves Time</span>
+    <section class="relative pt-40 pb-24 px-6 blueprint-grid overflow-hidden">
+        <div class="max-w-4xl mx-auto text-center">
+            <div class="eyebrow mb-5">// AI Implementation for Small Business</div>
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight leading-tight" style="color: var(--ink);">
+                Implement AI That <br>
+                <span style="color: var(--blue); text-decoration: underline; text-decoration-color: var(--brass); text-decoration-thickness: 3px; text-underline-offset: 10px;">Actually Saves Time</span>
             </h1>
-            <p class="text-xl text-slate-400 mb-10 max-w-2xl mx-auto">
+            <p class="text-xl mb-10 max-w-2xl mx-auto" style="color: var(--muted);">
                 Strategic AI Solutions helps businesses automate workflows, streamline operations, and implement custom AI systems that create measurable business results.
             </p>
             <div class="flex flex-col md:flex-row justify-center gap-4">
-                <a href="#contact" class="bg-sky-500 hover:bg-sky-400 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all transform hover:scale-105 shadow-lg shadow-sky-500/20">
+                <a href="#contact" class="btn-primary px-8 py-4 text-lg text-center">
                     Book Consultation
                 </a>
-                <a href="receptionists.html" class="glass px-8 py-4 rounded-xl font-bold text-lg hover:bg-white/10 transition text-white">
+                <a href="receptionists.html" class="btn-secondary px-8 py-4 text-lg text-center">
                     24/7 AI Receptionists
                 </a>
             </div>
@@ -102,72 +234,81 @@
     </section>
 
     <!-- Services Section -->
-    <section class="py-24 px-6 bg-slate-900/20">
+    <section class="py-24 px-6">
         <div class="max-w-6xl mx-auto">
             <div class="text-center mb-16">
-                <h2 class="text-4xl font-bold text-white mb-4">AI Solutions Built For Your Business</h2>
-                <div class="h-1 w-20 bg-sky-500 mx-auto"></div>
+                <div class="eyebrow mb-3">What We Do</div>
+                <h2 class="text-4xl font-bold" style="color: var(--ink);">AI Solutions Built For Your Business</h2>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="glass p-8 rounded-2xl border-white/5">
-                    <i class="fa-solid fa-brain text-sky-400 text-3xl mb-6"></i>
-                    <h3 class="text-xl font-bold mb-3 text-white">Custom AI Solutions</h3>
-                    <p class="text-slate-400">Tailored AI models designed to solve your specific operational bottlenecks.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="card p-8">
+                    <span class="tag mb-5" style="display: inline-block;">Custom</span>
+                    <i class="fa-solid fa-brain text-2xl mb-4 block" style="color: var(--blue);"></i>
+                    <h3 class="text-xl font-bold mb-3" style="color: var(--ink);">Custom AI Solutions</h3>
+                    <p style="color: var(--muted);">Tailored AI models designed to solve your specific operational bottlenecks.</p>
                 </div>
-                <div class="glass p-8 rounded-2xl border-white/5">
-                    <i class="fa-solid fa-bolt text-sky-400 text-3xl mb-6"></i>
-                    <h3 class="text-xl font-bold mb-3 text-white">Business Process Automation</h3>
-                    <p class="text-slate-400">Automate repetitive tasks and data entry across your existing software stack.</p>
+                <div class="card p-8">
+                    <span class="tag mb-5" style="display: inline-block;">Automation</span>
+                    <i class="fa-solid fa-bolt text-2xl mb-4 block" style="color: var(--blue);"></i>
+                    <h3 class="text-xl font-bold mb-3" style="color: var(--ink);">Business Process Automation</h3>
+                    <p style="color: var(--muted);">Automate repetitive tasks and data entry across your existing software stack.</p>
                 </div>
-                <div class="glass p-8 rounded-2xl border-white/5">
-                    <i class="fa-solid fa-diagram-project text-sky-400 text-3xl mb-6"></i>
-                    <h3 class="text-xl font-bold mb-3 text-white">AI Workflow Design</h3>
-                    <p class="text-slate-400">Strategic restructuring of how your team works using intelligent AI routing.</p>
+                <div class="card p-8">
+                    <span class="tag mb-5" style="display: inline-block;">Workflow</span>
+                    <i class="fa-solid fa-diagram-project text-2xl mb-4 block" style="color: var(--blue);"></i>
+                    <h3 class="text-xl font-bold mb-3" style="color: var(--ink);">AI Workflow Design</h3>
+                    <p style="color: var(--muted);">Strategic restructuring of how your team works using intelligent AI routing.</p>
                 </div>
-                <div class="glass p-8 rounded-2xl border-white/5">
-                    <i class="fa-solid fa-robot text-sky-400 text-3xl mb-6"></i>
-                    <h3 class="text-xl font-bold mb-3 text-white">AI Agents</h3>
-                    <p class="text-slate-400">Digital employees that handle research, emails, and complex multi-step tasks.</p>
+                <div class="card p-8">
+                    <span class="tag mb-5" style="display: inline-block;">Agents</span>
+                    <i class="fa-solid fa-robot text-2xl mb-4 block" style="color: var(--blue);"></i>
+                    <h3 class="text-xl font-bold mb-3" style="color: var(--ink);">AI Agents</h3>
+                    <p style="color: var(--muted);">Digital employees that handle research, emails, and complex multi-step tasks.</p>
                 </div>
-                <div class="glass p-8 rounded-2xl border-white/5">
-                    <i class="fa-solid fa-chart-line text-sky-400 text-3xl mb-6"></i>
-                    <h3 class="text-xl font-bold mb-3 text-white">Operational Efficiency</h3>
-                    <p class="text-slate-400">Data-driven auditing to identify where AI can reduce overhead costs.</p>
+                <div class="card p-8">
+                    <span class="tag mb-5" style="display: inline-block;">Efficiency</span>
+                    <i class="fa-solid fa-chart-line text-2xl mb-4 block" style="color: var(--blue);"></i>
+                    <h3 class="text-xl font-bold mb-3" style="color: var(--ink);">Operational Efficiency</h3>
+                    <p style="color: var(--muted);">Data-driven auditing to identify where AI can reduce overhead costs.</p>
                 </div>
-                <div class="glass p-8 rounded-2xl border-sky-500/30">
-                    <i class="fa-solid fa-headset text-sky-400 text-3xl mb-6"></i>
-                    <h3 class="text-xl font-bold mb-3 text-white">24/7 AI Receptionists</h3>
-                    <p class="text-slate-400 mb-6">Never miss a lead again with natural voice AI that books your calendar.</p>
-                    <a href="receptionists.html" class="text-sky-400 font-bold hover:underline">Learn More <i class="fa-solid fa-arrow-right ml-1"></i></a>
+                <div class="card p-8 corner-marks" style="border-color: var(--blue);">
+                    <span class="tag mb-5" style="display: inline-block; border-color: var(--blue); color: var(--blue);">Receptionist</span>
+                    <i class="fa-solid fa-headset text-2xl mb-4 block" style="color: var(--blue);"></i>
+                    <h3 class="text-xl font-bold mb-3" style="color: var(--ink);">24/7 AI Receptionists</h3>
+                    <p class="mb-6" style="color: var(--muted);">Never miss a lead again with natural voice AI that books your calendar.</p>
+                    <a href="receptionists.html" class="font-bold hover:underline" style="color: var(--blue);">Learn More <i class="fa-solid fa-arrow-right ml-1"></i></a>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Process Section -->
-    <section class="py-24 px-6 bg-slate-900/50">
+    <section class="py-24 px-6" style="background: var(--canvas-alt); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
         <div class="max-w-5xl mx-auto">
-            <h2 class="text-3xl font-bold text-center mb-16 text-white">How We Work</h2>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div class="text-center mb-16">
+                <div class="eyebrow mb-3">Our Process</div>
+                <h2 class="text-3xl font-bold" style="color: var(--ink);">How We Work</h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 step-line">
                 <div class="text-center">
-                    <div class="bg-sky-500 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold mx-auto mb-4">1</div>
-                    <h4 class="text-lg font-bold mb-2">Discover</h4>
-                    <p class="text-slate-400 text-sm">Identify repetitive tasks and opportunities.</p>
+                    <div class="step-marker mx-auto mb-4">01</div>
+                    <h4 class="text-lg font-bold mb-2" style="color: var(--ink);">Discover</h4>
+                    <p class="text-sm" style="color: var(--muted);">Identify repetitive tasks and opportunities.</p>
                 </div>
                 <div class="text-center">
-                    <div class="bg-sky-500 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold mx-auto mb-4">2</div>
-                    <h4 class="text-lg font-bold mb-2">Design</h4>
-                    <p class="text-slate-400 text-sm">Create a custom AI strategy and roadmap.</p>
+                    <div class="step-marker mx-auto mb-4">02</div>
+                    <h4 class="text-lg font-bold mb-2" style="color: var(--ink);">Design</h4>
+                    <p class="text-sm" style="color: var(--muted);">Create a custom AI strategy and roadmap.</p>
                 </div>
                 <div class="text-center">
-                    <div class="bg-sky-500 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold mx-auto mb-4">3</div>
-                    <h4 class="text-lg font-bold mb-2">Implement</h4>
-                    <p class="text-slate-400 text-sm">Build automations and custom AI systems.</p>
+                    <div class="step-marker mx-auto mb-4">03</div>
+                    <h4 class="text-lg font-bold mb-2" style="color: var(--ink);">Implement</h4>
+                    <p class="text-sm" style="color: var(--muted);">Build automations and custom AI systems.</p>
                 </div>
                 <div class="text-center">
-                    <div class="bg-sky-500 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold mx-auto mb-4">4</div>
-                    <h4 class="text-lg font-bold mb-2">Optimize</h4>
-                    <p class="text-slate-400 text-sm">Improve and expand systems over time.</p>
+                    <div class="step-marker mx-auto mb-4">04</div>
+                    <h4 class="text-lg font-bold mb-2" style="color: var(--ink);">Optimize</h4>
+                    <p class="text-sm" style="color: var(--muted);">Improve and expand systems over time.</p>
                 </div>
             </div>
         </div>
@@ -176,46 +317,47 @@
     <!-- Form Section -->
     <section id="contact" class="py-24 px-6">
         <div class="max-w-4xl mx-auto">
-            <div id="form-container" class="glass p-8 md:p-10 rounded-3xl max-w-xl mx-auto">
-                <h2 class="text-3xl font-bold mb-2">Ready to Scale?</h2>
-                <p class="text-slate-400 mb-8">Enter your details to access our calendar.</p>
-                
+            <div id="form-container" class="card corner-marks p-8 md:p-10 max-w-xl mx-auto">
+                <div class="eyebrow mb-2">Get Started</div>
+                <h2 class="text-3xl font-bold mb-2" style="color: var(--ink);">Ready to Scale?</h2>
+                <p class="mb-8" style="color: var(--muted);">Enter your details to access our calendar.</p>
+
                 <form id="contact-form" class="space-y-4">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm mb-2 text-slate-300">Name</label>
-                            <input type="text" id="name" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:border-sky-500 transition text-white">
+                            <label class="field-label block mb-2">Name</label>
+                            <input type="text" id="name" required class="input-field">
                         </div>
                         <div>
-                            <label class="block text-sm mb-2 text-slate-300">Business Name</label>
-                            <input type="text" id="business" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:border-sky-500 transition text-white">
+                            <label class="field-label block mb-2">Business Name</label>
+                            <input type="text" id="business" required class="input-field">
                         </div>
                     </div>
                     <div>
-                        <label class="block text-sm mb-2 text-slate-300">Email</label>
-                        <input type="email" id="email" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:border-sky-500 transition text-white">
+                        <label class="field-label block mb-2">Email</label>
+                        <input type="email" id="email" required class="input-field">
                     </div>
                     <div>
-                        <label class="block text-sm mb-2 text-slate-300">Phone Number</label>
-                        <input type="tel" id="phone" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:border-sky-500 transition text-white">
+                        <label class="field-label block mb-2">Phone Number</label>
+                        <input type="tel" id="phone" required class="input-field">
                     </div>
                     <div>
-                        <label class="block text-sm mb-2 text-slate-300">Industry</label>
-                        <input type="text" id="industry" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:border-sky-500 transition text-white">
+                        <label class="field-label block mb-2">Industry</label>
+                        <input type="text" id="industry" required class="input-field">
                     </div>
                     <div>
-                        <label class="block text-sm mb-2 text-slate-300">Briefly describe your business and what you want to do with AI</label>
-                        <textarea id="description" rows="3" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:border-sky-500 transition text-white"></textarea>
+                        <label class="field-label block mb-2">Briefly describe your business and what you want to do with AI</label>
+                        <textarea id="description" rows="3" required class="input-field"></textarea>
                     </div>
-                    <button type="submit" id="submit-btn" class="w-full bg-sky-500 hover:bg-sky-400 text-white font-bold py-4 rounded-xl transition shadow-lg flex items-center justify-center">
+                    <button type="submit" id="submit-btn" class="w-full btn-primary py-4 flex items-center justify-center">
                         <span id="btn-text">Continue to Calendar</span>
                         <i class="fa-solid fa-arrow-right ml-2"></i>
                     </button>
                 </form>
             </div>
 
-            <div id="calendar-section" class="text-center animate-fade-in">
-                <h2 class="text-3xl font-bold mb-6 text-white">Select a Time</h2>
+            <div id="calendar-section" class="text-center">
+                <h2 class="text-3xl font-bold mb-6" style="color: var(--ink);">Select a Time</h2>
                 <div class="calendar-wrapper">
                     <iframe src="https://calendar.app.google/epkzE3JRMouRKTf66" width="100%" height="700" frameborder="0" scrolling="yes"></iframe>
                 </div>
@@ -224,15 +366,15 @@
     </section>
 
     <!-- Footer -->
-    <footer class="py-16 border-t border-slate-800 px-6 text-center">
+    <footer class="py-16 px-6 text-center" style="background: var(--blue-deep);">
         <div class="max-w-6xl mx-auto">
-            <div class="text-2xl font-bold tracking-tighter text-white mb-2">Strategic AI Solutions</div>
-            <p class="text-slate-500 text-sm mb-8">S.A.I. - Implementing AI That Works</p>
-            <div class="flex justify-center space-x-6 text-sm font-medium mb-8">
-                <a href="index.html" class="text-sky-400 hover:text-sky-300 transition">Home</a>
-                <a href="receptionists.html" class="text-slate-400 hover:text-white transition">24/7 AI Receptionists</a>
+            <div class="text-2xl font-bold tracking-tight mb-2 text-white">Strategic AI Solutions</div>
+            <p class="text-sm mb-8" style="color: rgba(255,255,255,0.6);">S.A.I. - Implementing AI That Works</p>
+            <div class="flex justify-center space-x-6 text-sm font-medium mb-8 mono">
+                <a href="index.html" class="text-white hover:opacity-80 transition">Home</a>
+                <a href="receptionists.html" style="color: rgba(255,255,255,0.6);" class="hover:text-white transition">24/7 AI Receptionists</a>
             </div>
-            <p class="text-slate-600 text-xs">© 2026 Strategic AI Solutions. getSAIsolutions.com</p>
+            <p class="text-xs mono" style="color: rgba(255,255,255,0.4);">© 2026 Strategic AI Solutions. getSAIsolutions.com</p>
         </div>
     </footer>
 
