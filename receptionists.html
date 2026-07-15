@@ -7,145 +7,310 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
-        
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+        :root {
+            --canvas: #EEF0EA;
+            --canvas-alt: #E3E6DD;
+            --ink: #17212E;
+            --muted: #5B6474;
+            --blue: #1F4E8C;
+            --blue-deep: #12314F;
+            --brass: #B8822C;
+            --line: #D8D3C6;
+            --white: #FFFFFF;
+        }
+
+        * { box-sizing: border-box; }
+
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: #020617;
-            color: #f8fafc;
+            font-family: 'IBM Plex Sans', sans-serif;
+            background-color: var(--canvas);
+            color: var(--ink);
             scroll-behavior: smooth;
         }
 
-        .glass {
-            background: rgba(30, 41, 59, 0.5);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; }
+
+        .mono { font-family: 'IBM Plex Mono', monospace; }
+
+        .eyebrow {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--blue);
+            font-weight: 500;
         }
 
-        .gradient-text {
-            background: linear-gradient(90deg, #38bdf8, #818cf8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .nav-glass {
+            background: rgba(238, 240, 234, 0.92);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--line);
         }
 
-        .hero-glow {
-            position: absolute;
-            top: -10%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            height: 400px;
-            background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, rgba(2, 6, 23, 0) 70%);
-            z-index: -1;
+        .blueprint-grid {
+            background-image:
+                linear-gradient(rgba(31,78,140,0.07) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(31,78,140,0.07) 1px, transparent 1px);
+            background-size: 34px 34px;
         }
+
+        .card {
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            transition: border-color 0.2s ease, transform 0.2s ease;
+        }
+        .card:hover { border-color: var(--blue); transform: translateY(-3px); }
+
+        .tag {
+            display: inline-block;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.68rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            padding: 0.45rem 0.9rem;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            color: var(--muted);
+            background: var(--white);
+        }
+
+        .btn-primary {
+            background: var(--blue);
+            color: #fff;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: background 0.2s ease;
+        }
+        .btn-primary:hover { background: var(--brass); }
+
+        .btn-nav {
+            background: var(--blue);
+            color: #fff;
+            border-radius: 7px;
+            font-weight: 600;
+            transition: background 0.2s ease;
+        }
+        .btn-nav:hover { background: var(--brass); }
 
         #calendar-section { display: none; }
 
         .loader {
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #38bdf8;
+            border: 3px solid rgba(255,255,255,0.35);
+            border-top: 3px solid #fff;
             border-radius: 50%;
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             animation: spin 1s linear infinite;
             display: inline-block;
             margin-right: 10px;
             vertical-align: middle;
         }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         .calendar-wrapper {
             background: white;
-            border-radius: 1rem;
+            border: 1px solid var(--line);
+            border-radius: 12px;
             overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgba(56, 189, 248, 0.25);
+            box-shadow: 0 20px 40px -20px rgba(23,33,46,0.25);
+        }
+
+        .input-field {
+            width: 100%;
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 0.75rem 1rem;
+            color: var(--ink);
+            transition: border-color 0.2s ease;
+        }
+        .input-field:focus {
+            outline: none;
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(31,78,140,0.12);
+        }
+
+        .field-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        .step-marker {
+            font-family: 'IBM Plex Mono', monospace;
+            font-weight: 600;
+            color: #fff;
+            background: var(--blue);
+            width: 42px;
+            height: 42px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-rail { position: relative; }
+        .step-rail::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 21px;
+            width: 1px;
+            background: var(--line);
+            z-index: 0;
+        }
+
+        .corner-marks { position: relative; }
+        .corner-marks::before, .corner-marks::after {
+            content: '';
+            position: absolute;
+            width: 14px;
+            height: 14px;
+        }
+        .corner-marks::before { top: -1px; left: -1px; border-top: 2px solid var(--brass); border-left: 2px solid var(--brass); }
+        .corner-marks::after { bottom: -1px; right: -1px; border-bottom: 2px solid var(--brass); border-right: 2px solid var(--brass); }
+
+        /* Signature element: dispatch ticket */
+        .ticket {
+            background: var(--white);
+            border: 1px solid var(--line);
+            border-left: 3px dashed var(--blue);
+            border-radius: 8px;
+            padding: 1.75rem;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.85rem;
+            color: var(--ink);
+            max-width: 380px;
+        }
+        .ticket-row { display: flex; justify-content: space-between; padding: 0.5rem 0; border-bottom: 1px dashed var(--line); }
+        .ticket-row:last-child { border-bottom: none; }
+        .ticket-label { color: var(--muted); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.06em; }
+        .status-dot {
+            width: 8px; height: 8px; border-radius: 50%;
+            background: #2E9E5B; display: inline-block; margin-right: 6px;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+        .status-tag {
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--brass);
+            background: rgba(184,130,46,0.1);
+            padding: 0.2rem 0.6rem;
+            border-radius: 5px;
         }
     </style>
 </head>
 <body>
 
     <!-- Nav -->
-    <nav class="fixed w-full z-50 glass py-4">
+    <nav class="fixed w-full z-50 nav-glass py-4">
         <div class="max-w-6xl mx-auto px-6 flex justify-between items-center">
-            <div class="text-2xl font-bold tracking-tighter text-white">S.A.I.</div>
-            <div class="hidden md:flex space-x-8">
-                <a href="index.html" class="text-slate-300 hover:text-white transition">Home</a>
-                <a href="receptionists.html" class="text-sky-400 font-semibold">24/7 AI Receptionists</a>
+            <div>
+                <div class="text-2xl font-bold tracking-tight" style="color: var(--ink);">S.A.I.</div>
             </div>
-            <a href="#contact" class="bg-sky-500 hover:bg-sky-600 px-5 py-2 rounded-full text-sm font-semibold transition">Get Started</a>
+            <div class="hidden md:flex space-x-8 mono" style="font-size: 0.9rem;">
+                <a href="index.html" style="color: var(--muted);" class="hover:text-[var(--ink)] transition">Home</a>
+                <a href="receptionists.html" style="color: var(--blue); font-weight: 600;">24/7 AI Receptionists</a>
+            </div>
+            <a href="#contact" class="btn-nav px-5 py-2 text-sm">Get Started</a>
         </div>
     </nav>
 
     <!-- Hero -->
-    <section class="relative pt-40 pb-24 px-6 overflow-hidden text-center">
-        <div class="hero-glow"></div>
-        <div class="max-w-4xl mx-auto">
-            <h1 class="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-white">
-                Never Miss <br><span class="gradient-text">Another Lead</span>
-            </h1>
-            <p class="text-xl text-slate-400 mb-10 max-w-2xl mx-auto">
-                AI receptionists that answer calls, qualify prospects, and book appointments 24/7.
-            </p>
-            <a href="#contact" class="bg-sky-500 hover:bg-sky-400 text-white px-8 py-4 rounded-xl font-bold text-lg transition-all transform hover:scale-105 shadow-lg shadow-sky-500/20">
-                Book a Discovery Call
-            </a>
+    <section class="relative pt-40 pb-24 px-6 blueprint-grid overflow-hidden">
+        <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+            <div>
+                <div class="eyebrow mb-5">// Never Miss An Inbound Call</div>
+                <h1 class="text-5xl md:text-6xl font-bold mb-6 tracking-tight leading-tight" style="color: var(--ink);">
+                    Never Miss <br>
+                    <span style="color: var(--blue); text-decoration: underline; text-decoration-color: var(--brass); text-decoration-thickness: 3px; text-underline-offset: 10px;">Another Lead</span>
+                </h1>
+                <p class="text-xl mb-10 max-w-lg" style="color: var(--muted);">
+                    AI receptionists that answer calls, qualify prospects, and book appointments 24/7.
+                </p>
+                <a href="#contact" class="btn-primary inline-block px-8 py-4 text-lg">
+                    Book a Discovery Call
+                </a>
+            </div>
+            <div class="flex justify-center lg:justify-end">
+                <div class="ticket corner-marks">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="ticket-label">Call Log · Live</span>
+                        <span><span class="status-dot"></span><span class="ticket-label" style="color: #2E9E5B;">Active</span></span>
+                    </div>
+                    <div class="ticket-row"><span class="ticket-label">Time</span><span>11:42 PM</span></div>
+                    <div class="ticket-row"><span class="ticket-label">Caller</span><span>J. Alvarez</span></div>
+                    <div class="ticket-row"><span class="ticket-label">Job Type</span><span>Roof leak repair</span></div>
+                    <div class="ticket-row"><span class="ticket-label">Qualified</span><span>Yes — urgent</span></div>
+                    <div class="ticket-row"><span class="ticket-label">Status</span><span class="status-tag">BOOKED · TUE 9:00 AM</span></div>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Benefits -->
     <section class="py-24 px-6">
         <div class="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            <div class="glass p-8 rounded-2xl">
-                <i class="fa-solid fa-phone-volume text-sky-400 text-3xl mb-4"></i>
-                <h3 class="text-xl font-semibold mb-2">Answer Every Call</h3>
-                <p class="text-slate-400 text-sm">No more voicemails. Your AI handles every inbound ring instantly.</p>
+            <div class="card p-8">
+                <i class="fa-solid fa-phone-volume text-2xl mb-4 block" style="color: var(--blue);"></i>
+                <h3 class="text-xl font-semibold mb-2" style="color: var(--ink);">Answer Every Call</h3>
+                <p class="text-sm" style="color: var(--muted);">No more voicemails. Your AI handles every inbound ring instantly.</p>
             </div>
-            <div class="glass p-8 rounded-2xl">
-                <i class="fa-solid fa-filter text-sky-400 text-3xl mb-4"></i>
-                <h3 class="text-xl font-semibold mb-2">Qualify Leads</h3>
-                <p class="text-slate-400 text-sm">The AI asks the right questions to ensure they are a perfect fit for you.</p>
+            <div class="card p-8">
+                <i class="fa-solid fa-filter text-2xl mb-4 block" style="color: var(--blue);"></i>
+                <h3 class="text-xl font-semibold mb-2" style="color: var(--ink);">Qualify Leads</h3>
+                <p class="text-sm" style="color: var(--muted);">The AI asks the right questions to ensure they are a perfect fit for you.</p>
             </div>
-            <div class="glass p-8 rounded-2xl">
-                <i class="fa-solid fa-calendar-check text-sky-400 text-3xl mb-4"></i>
-                <h3 class="text-xl font-semibold mb-2">Instant Booking</h3>
-                <p class="text-slate-400 text-sm">Direct integration with your calendar for seamless scheduling.</p>
+            <div class="card p-8">
+                <i class="fa-solid fa-calendar-check text-2xl mb-4 block" style="color: var(--blue);"></i>
+                <h3 class="text-xl font-semibold mb-2" style="color: var(--ink);">Instant Booking</h3>
+                <p class="text-sm" style="color: var(--muted);">Direct integration with your calendar for seamless scheduling.</p>
             </div>
-            <div class="glass p-8 rounded-2xl">
-                <i class="fa-solid fa-clock text-sky-400 text-3xl mb-4"></i>
-                <h3 class="text-xl font-semibold mb-2">Available 24/7</h3>
-                <p class="text-slate-400 text-sm">While you sleep, your AI is working, qualifying, and booking.</p>
+            <div class="card p-8">
+                <i class="fa-solid fa-clock text-2xl mb-4 block" style="color: var(--blue);"></i>
+                <h3 class="text-xl font-semibold mb-2" style="color: var(--ink);">Available 24/7</h3>
+                <p class="text-sm" style="color: var(--muted);">While you sleep, your AI is working, qualifying, and booking.</p>
             </div>
         </div>
     </section>
 
     <!-- How It Works -->
-    <section class="py-24 px-6 bg-slate-900/50">
+    <section class="py-24 px-6" style="background: var(--canvas-alt); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line);">
         <div class="max-w-4xl mx-auto">
-            <h2 class="text-3xl font-bold text-center mb-16 text-white">How It Works</h2>
-            <div class="space-y-12">
+            <div class="text-center mb-16">
+                <div class="eyebrow mb-3">The Flow</div>
+                <h2 class="text-3xl font-bold" style="color: var(--ink);">How It Works</h2>
+            </div>
+            <div class="space-y-12 step-rail">
                 <div class="flex gap-6 items-start">
-                    <div class="bg-sky-500 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold flex-shrink-0">1</div>
+                    <div class="step-marker">01</div>
                     <div>
-                        <h4 class="text-xl font-semibold mb-2 text-white">Calls are answered by AI</h4>
-                        <p class="text-slate-400">When a prospect calls, S.A.I answers in your brand voice within seconds.</p>
+                        <h4 class="text-xl font-semibold mb-2" style="color: var(--ink);">Calls are answered by AI</h4>
+                        <p style="color: var(--muted);">When a prospect calls, S.A.I answers in your brand voice within seconds.</p>
                     </div>
                 </div>
                 <div class="flex gap-6 items-start">
-                    <div class="bg-sky-500 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold flex-shrink-0">2</div>
+                    <div class="step-marker">02</div>
                     <div>
-                        <h4 class="text-xl font-semibold mb-2 text-white">AI qualifies leads</h4>
-                        <p class="text-slate-400">The AI determines budget, urgency, and project scope automatically.</p>
+                        <h4 class="text-xl font-semibold mb-2" style="color: var(--ink);">AI qualifies leads</h4>
+                        <p style="color: var(--muted);">The AI determines budget, urgency, and project scope automatically.</p>
                     </div>
                 </div>
                 <div class="flex gap-6 items-start">
-                    <div class="bg-sky-500 text-white w-12 h-12 rounded-full flex items-center justify-center font-bold flex-shrink-0">3</div>
+                    <div class="step-marker">03</div>
                     <div>
-                        <h4 class="text-xl font-semibold mb-2 text-white">Booked into your calendar</h4>
-                        <p class="text-slate-400">Qualified leads are instantly added to your CRM or Calendar.</p>
+                        <h4 class="text-xl font-semibold mb-2" style="color: var(--ink);">Booked into your calendar</h4>
+                        <p style="color: var(--muted);">Qualified leads are instantly added to your CRM or Calendar.</p>
                     </div>
                 </div>
             </div>
@@ -155,58 +320,60 @@
     <!-- Industries -->
     <section class="py-24 px-6">
         <div class="max-w-6xl mx-auto text-center">
-            <h2 class="text-3xl font-bold mb-12 text-white">Tailored for Your Industry</h2>
-            <div class="flex flex-wrap justify-center gap-4">
-                <span class="glass px-6 py-3 rounded-full border-sky-500/30 text-sky-300 font-medium">Contractors</span>
-                <span class="glass px-6 py-3 rounded-full border-sky-500/30 text-sky-300 font-medium">Medical Practices</span>
-                <span class="glass px-6 py-3 rounded-full border-sky-500/30 text-sky-300 font-medium">Law Firms</span>
-                <span class="glass px-6 py-3 rounded-full border-sky-500/30 text-sky-300 font-medium">Home Services</span>
-                <span class="glass px-6 py-3 rounded-full border-sky-500/30 text-sky-300 font-medium">Real Estate</span>
+            <div class="eyebrow mb-3">Who It's For</div>
+            <h2 class="text-3xl font-bold mb-12" style="color: var(--ink);">Tailored for Your Industry</h2>
+            <div class="flex flex-wrap justify-center gap-3">
+                <span class="tag" style="color: var(--blue); border-color: var(--blue);">Contractors</span>
+                <span class="tag" style="color: var(--blue); border-color: var(--blue);">Medical Practices</span>
+                <span class="tag" style="color: var(--blue); border-color: var(--blue);">Law Firms</span>
+                <span class="tag" style="color: var(--blue); border-color: var(--blue);">Home Services</span>
+                <span class="tag" style="color: var(--blue); border-color: var(--blue);">Real Estate</span>
             </div>
         </div>
     </section>
 
     <!-- Form Section -->
-    <section id="contact" class="py-24 px-6 bg-slate-900/30">
+    <section id="contact" class="py-24 px-6" style="background: var(--canvas-alt); border-top: 1px solid var(--line);">
         <div class="max-w-4xl mx-auto">
-            <div id="form-container" class="glass p-8 md:p-10 rounded-3xl max-w-xl mx-auto">
-                <h2 class="text-3xl font-bold mb-2">Start Your AI Receptionist</h2>
-                <p class="text-slate-400 mb-8">Enter your details to access our calendar.</p>
-                
+            <div id="form-container" class="card corner-marks p-8 md:p-10 max-w-xl mx-auto">
+                <div class="eyebrow mb-2">Get Started</div>
+                <h2 class="text-3xl font-bold mb-2" style="color: var(--ink);">Start Your AI Receptionist</h2>
+                <p class="mb-8" style="color: var(--muted);">Enter your details to access our calendar.</p>
+
                 <form id="contact-form" class="space-y-4">
                     <div>
-                        <label class="block text-sm mb-2 text-slate-300">Name</label>
-                        <input type="text" id="name" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:border-sky-500 transition text-white">
+                        <label class="field-label block mb-2">Name</label>
+                        <input type="text" id="name" required class="input-field">
                     </div>
                     <div>
-                        <label class="block text-sm mb-2 text-slate-300">Business Name</label>
-                        <input type="text" id="business" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:border-sky-500 transition text-white">
+                        <label class="field-label block mb-2">Business Name</label>
+                        <input type="text" id="business" required class="input-field">
                     </div>
                     <div>
-                        <label class="block text-sm mb-2 text-slate-300">Email</label>
-                        <input type="email" id="email" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:border-sky-500 transition text-white">
+                        <label class="field-label block mb-2">Email</label>
+                        <input type="email" id="email" required class="input-field">
                     </div>
                     <div>
-                        <label class="block text-sm mb-2 text-slate-300">Phone Number</label>
-                        <input type="tel" id="phone" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:border-sky-500 transition text-white">
+                        <label class="field-label block mb-2">Phone Number</label>
+                        <input type="tel" id="phone" required class="input-field">
                     </div>
                     <div>
-                        <label class="block text-sm mb-2 text-slate-300">Industry</label>
-                        <input type="text" id="industry" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:border-sky-500 transition text-white">
+                        <label class="field-label block mb-2">Industry</label>
+                        <input type="text" id="industry" required class="input-field">
                     </div>
                     <div>
-                        <label class="block text-sm mb-2 text-slate-300">Briefly describe your business</label>
-                        <textarea id="description" rows="3" required class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 focus:outline-none focus:border-sky-500 transition text-white"></textarea>
+                        <label class="field-label block mb-2">Briefly describe your business</label>
+                        <textarea id="description" rows="3" required class="input-field"></textarea>
                     </div>
-                    <button type="submit" id="submit-btn" class="w-full bg-sky-500 hover:bg-sky-400 text-white font-bold py-4 rounded-xl transition shadow-lg flex items-center justify-center">
+                    <button type="submit" id="submit-btn" class="w-full btn-primary py-4 flex items-center justify-center">
                         <span id="btn-text">Continue to Calendar</span>
                         <i class="fa-solid fa-arrow-right ml-2"></i>
                     </button>
                 </form>
             </div>
 
-            <div id="calendar-section" class="text-center animate-fade-in">
-                <h2 class="text-3xl font-bold mb-6 text-white">Select a Time</h2>
+            <div id="calendar-section" class="text-center">
+                <h2 class="text-3xl font-bold mb-6" style="color: var(--ink);">Select a Time</h2>
                 <div class="calendar-wrapper">
                     <iframe src="https://calendar.app.google/epkzE3JRMouRKTf66" width="100%" height="700" frameborder="0" scrolling="yes"></iframe>
                 </div>
@@ -215,15 +382,15 @@
     </section>
 
     <!-- Footer -->
-    <footer class="py-16 border-t border-slate-800 px-6 text-center">
+    <footer class="py-16 px-6 text-center" style="background: var(--blue-deep);">
         <div class="max-w-6xl mx-auto">
-            <div class="text-2xl font-bold tracking-tighter text-white mb-2">Strategic AI Solutions</div>
-            <p class="text-slate-500 text-sm mb-8">Strategic AI Solutions (S.A.I.)</p>
-            <div class="flex justify-center space-x-6 text-sm font-medium mb-8">
-                <a href="index.html" class="text-slate-400 hover:text-white transition">Home</a>
-                <a href="receptionists.html" class="text-sky-400 transition">24/7 AI Receptionists</a>
+            <div class="text-2xl font-bold tracking-tight mb-2 text-white">Strategic AI Solutions</div>
+            <p class="text-sm mb-8" style="color: rgba(255,255,255,0.6);">Strategic AI Solutions (S.A.I.)</p>
+            <div class="flex justify-center space-x-6 text-sm font-medium mb-8 mono">
+                <a href="index.html" style="color: rgba(255,255,255,0.6);" class="hover:text-white transition">Home</a>
+                <a href="receptionists.html" class="text-white hover:opacity-80 transition">24/7 AI Receptionists</a>
             </div>
-            <p class="text-slate-600 text-xs">© 2026 Strategic AI Solutions. getSAIsolutions.com</p>
+            <p class="text-xs mono" style="color: rgba(255,255,255,0.4);">© 2026 Strategic AI Solutions. getSAIsolutions.com</p>
         </div>
     </footer>
 
